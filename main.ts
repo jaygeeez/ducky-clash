@@ -1340,9 +1340,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     pause(1000)
 })
 let ammo: Sprite = null
+let kaiju: Sprite = null
 let projectile2: Sprite = null
 let bossAttacks = 0
-let kaiju: Sprite = null
 let heart: Sprite = null
 let True2: Sprite = null
 let True: Sprite = null
@@ -1706,155 +1706,6 @@ game.onUpdate(function () {
         refresh = true
     }
     Ducky.ay = 400
-})
-game.onUpdateInterval(2000, function () {
-    if (level >= 1 || BUBBLE_Jump == true) {
-        if (level <= 8) {
-            kaiju = sprites.create(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . c c c c . . . . . . . . 
-                . . c c 4 4 4 4 c c . . . . . . 
-                . c 4 4 4 4 4 4 4 4 c . . . . . 
-                c 4 4 4 4 4 1 f 4 4 4 c . . . . 
-                c 4 4 4 4 4 f f 4 4 4 4 c . . . 
-                c 4 4 4 4 4 4 4 4 4 4 4 c . . . 
-                c c b b 1 b 4 4 4 4 4 4 d c . . 
-                c 4 3 3 3 4 4 4 4 4 d d d c . . 
-                . b 4 4 4 4 4 4 4 4 d d d c . . 
-                . . c b b c 4 4 b d d d d c c . 
-                . c b b c 4 4 b b d d d d c d c 
-                . c c c c c c d d d d d d d d c 
-                . . . c c c c d 4 4 b d d d c . 
-                . . c c c c c b 4 4 b c c c . . 
-                . . c b b b c d 4 4 b c . . . . 
-                `, SpriteKind.Enemy)
-            kaiju.lifespan = 20000
-            kaiju.ay = 400
-            kaiju.setVelocity(50, 0)
-            animation.runImageAnimation(
-            kaiju,
-            [img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . c c c c . . . . 
-                . . . . . . c c 4 4 4 4 c c . . 
-                . . . . . c 4 4 4 4 4 4 4 4 c . 
-                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
-                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
-                . . c d 4 4 4 4 4 4 b 1 b b c c 
-                . . c d d d 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 4 4 4 b . 
-                . c c d d d d b 4 4 c b b c . . 
-                c d c d d d d b b 4 4 c b b c . 
-                c d d d d d d d d c c c c c c . 
-                . c d d d b 4 4 d c c c c . . . 
-                . . c c c b 4 4 b c c c c c . . 
-                . . . . c b 4 4 d c b b b c . . 
-                `,img`
-                . . . . . . . c c c c c . . . . 
-                . . . . . . c 4 4 4 4 4 c c . . 
-                . . . . . c 4 4 f 1 4 4 4 4 c . 
-                . . . . c 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 b 1 b b c c 
-                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 b 4 4 4 4 c . 
-                . . c d d d d b 4 4 c b b c . . 
-                c c c d d d d b b 4 4 c b b c . 
-                c d d d d d d d d c c c c c c . 
-                . c d d d b 4 4 b c c c . . . . 
-                . . c c c b b 4 4 d c . . . . . 
-                . . . . . c c c c c c c . . . . 
-                . . . . . . . c b b b c . . . . 
-                `,img`
-                . . . . . . . c c c c c . . . . 
-                . . . . . . c 4 4 4 4 4 c c . . 
-                . . . . . c 4 4 f 1 4 4 4 4 c . 
-                . . . . c 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 b 1 b b c c 
-                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 4 4 4 4 c 
-                . . c d d d 4 4 4 b 4 4 4 4 c . 
-                . . c d d d d b 4 4 c b b c . . 
-                c c c d d d d b b 4 4 c b b c . 
-                c d d d d d d d d c c c c c c . 
-                . c c d d d b 4 4 b c c . . . . 
-                . . . c c c b b 4 4 d c . . . . 
-                . . . . . c c c c c c c . . . . 
-                . . . . . . . c b b b c . . . . 
-                `,img`
-                . . . . . . . c c c c c . . . . 
-                . . . . . . c 4 4 4 4 4 c c . . 
-                . . . . . c 4 4 f 1 4 4 4 4 c . 
-                . . . . c 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 b 1 b b c c 
-                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 4 4 4 4 c 
-                . . c d d d 4 4 4 b 4 4 4 4 c . 
-                . . c d d d d b 4 4 c b b c . . 
-                . c c d d d d b b 4 4 c b b c . 
-                c c d d d d d d b b c c c c c . 
-                c d d d d d 4 4 b 4 4 c c . . . 
-                c c c c c c b b 4 4 b c . . . . 
-                . . . . . . c c c c c c . . . . 
-                . . . . . . c b b b c . . . . . 
-                `,img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . c c c c . . . . 
-                . . . . . . c c 4 4 4 4 c c . . 
-                . . . . . c 4 4 4 4 4 4 4 4 c . 
-                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
-                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 b 1 b b c c 
-                . . c d 4 4 4 4 4 4 b b 3 3 c c 
-                . . c d d d 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 4 4 4 b . 
-                . . c d d d d b 4 4 c b b c . . 
-                c c c d d d d b b 4 4 c b b c . 
-                c d d d d d d d d c c c c c c . 
-                c c d d d b 4 4 d c c c c . . . 
-                . . c c c b 4 4 b c c b c . . . 
-                . . . . . c b 4 4 d c c c . . . 
-                `,img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . c c c c . . . . 
-                . . . . . . c c 4 4 4 4 c c . . 
-                . . . . . c 4 4 4 4 4 4 4 4 c . 
-                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
-                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
-                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
-                . . c d 4 4 4 4 4 4 b 1 b b c c 
-                . . c d d d 4 4 4 4 4 3 3 3 4 c 
-                . . c d d d 4 4 4 4 4 4 4 4 b . 
-                . . c d d d d b 4 4 c b b c . . 
-                c c c d d d d b b 4 4 c b b c . 
-                c d d d d d d d d c c c c c c . 
-                . c c d d b 4 4 d c c c c . . . 
-                . . . c c b 4 4 c c c b b c . . 
-                . . . . . c 4 4 d c c c c c . . 
-                `],
-            100,
-            true
-            )
-            if (level <= 0 || level == 9) {
-                kaiju.setBounceOnWall(true)
-            }
-            tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
-        }
-    }
-    if (level == 9 && bossCounter == 0) {
-        spawnBoss()
-        bossCounter += 1
-    } else if (level == 9 && bossCounter >= 2) {
-        tiles.setTileAt(tiles.getTileLocation(21, 13), assets.tile`myTile5`)
-        tiles.setTileAt(tiles.getTileLocation(21, 14), assets.tile`bottom door`)
-        for (let index = 0; index <= 7; index++) {
-            tiles.setTileAt(tiles.getTileLocation(5 + index * 2, 14), assets.tile`myTile0`)
-        }
-    }
 })
 game.onUpdateInterval(2000, function () {
     if (level == 9 && bossCounter == 1) {
@@ -2259,6 +2110,159 @@ game.onUpdateInterval(2000, function () {
         if (Math.percentChance(35)) {
             BOSS.setVelocity(randint(-20, 20), 0)
             BOSS.setBounceOnWall(false)
+        }
+    }
+})
+game.onUpdateInterval(1500, function () {
+    if (level >= 1 || BUBBLE_Jump == true) {
+        if (level <= 8) {
+            kaiju = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . c c c c . . . . . . . . 
+                . . c c 4 4 4 4 c c . . . . . . 
+                . c 4 4 4 4 4 4 4 4 c . . . . . 
+                c 4 4 4 4 4 1 f 4 4 4 c . . . . 
+                c 4 4 4 4 4 f f 4 4 4 4 c . . . 
+                c 4 4 4 4 4 4 4 4 4 4 4 c . . . 
+                c c b b 1 b 4 4 4 4 4 4 d c . . 
+                c 4 3 3 3 4 4 4 4 4 d d d c . . 
+                . b 4 4 4 4 4 4 4 4 d d d c . . 
+                . . c b b c 4 4 b d d d d c c . 
+                . c b b c 4 4 b b d d d d c d c 
+                . c c c c c c d d d d d d d d c 
+                . . . c c c c d 4 4 b d d d c . 
+                . . c c c c c b 4 4 b c c c . . 
+                . . c b b b c d 4 4 b c . . . . 
+                `, SpriteKind.Enemy)
+            kaiju.lifespan = 20000
+            kaiju.ay = 400
+            kaiju.setVelocity(50, 0)
+            animation.runImageAnimation(
+            kaiju,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . c c c c . . . . 
+                . . . . . . c c 4 4 4 4 c c . . 
+                . . . . . c 4 4 4 4 4 4 4 4 c . 
+                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
+                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
+                . . c d 4 4 4 4 4 4 b 1 b b c c 
+                . . c d d d 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 4 4 4 b . 
+                . c c d d d d b 4 4 c b b c . . 
+                c d c d d d d b b 4 4 c b b c . 
+                c d d d d d d d d c c c c c c . 
+                . c d d d b 4 4 d c c c c . . . 
+                . . c c c b 4 4 b c c c c c . . 
+                . . . . c b 4 4 d c b b b c . . 
+                `,img`
+                . . . . . . . c c c c c . . . . 
+                . . . . . . c 4 4 4 4 4 c c . . 
+                . . . . . c 4 4 f 1 4 4 4 4 c . 
+                . . . . c 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 b 1 b b c c 
+                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 b 4 4 4 4 c . 
+                . . c d d d d b 4 4 c b b c . . 
+                c c c d d d d b b 4 4 c b b c . 
+                c d d d d d d d d c c c c c c . 
+                . c d d d b 4 4 b c c c . . . . 
+                . . c c c b b 4 4 d c . . . . . 
+                . . . . . c c c c c c c . . . . 
+                . . . . . . . c b b b c . . . . 
+                `,img`
+                . . . . . . . c c c c c . . . . 
+                . . . . . . c 4 4 4 4 4 c c . . 
+                . . . . . c 4 4 f 1 4 4 4 4 c . 
+                . . . . c 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 b 1 b b c c 
+                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 4 4 4 4 c 
+                . . c d d d 4 4 4 b 4 4 4 4 c . 
+                . . c d d d d b 4 4 c b b c . . 
+                c c c d d d d b b 4 4 c b b c . 
+                c d d d d d d d d c c c c c c . 
+                . c c d d d b 4 4 b c c . . . . 
+                . . . c c c b b 4 4 d c . . . . 
+                . . . . . c c c c c c c . . . . 
+                . . . . . . . c b b b c . . . . 
+                `,img`
+                . . . . . . . c c c c c . . . . 
+                . . . . . . c 4 4 4 4 4 c c . . 
+                . . . . . c 4 4 f 1 4 4 4 4 c . 
+                . . . . c 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 b 1 b b c c 
+                . . c d 4 4 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 4 4 4 4 c 
+                . . c d d d 4 4 4 b 4 4 4 4 c . 
+                . . c d d d d b 4 4 c b b c . . 
+                . c c d d d d b b 4 4 c b b c . 
+                c c d d d d d d b b c c c c c . 
+                c d d d d d 4 4 b 4 4 c c . . . 
+                c c c c c c b b 4 4 b c . . . . 
+                . . . . . . c c c c c c . . . . 
+                . . . . . . c b b b c . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . c c c c . . . . 
+                . . . . . . c c 4 4 4 4 c c . . 
+                . . . . . c 4 4 4 4 4 4 4 4 c . 
+                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
+                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 b 1 b b c c 
+                . . c d 4 4 4 4 4 4 b b 3 3 c c 
+                . . c d d d 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 4 4 4 b . 
+                . . c d d d d b 4 4 c b b c . . 
+                c c c d d d d b b 4 4 c b b c . 
+                c d d d d d d d d c c c c c c . 
+                c c d d d b 4 4 d c c c c . . . 
+                . . c c c b 4 4 b c c b c . . . 
+                . . . . . c b 4 4 d c c c . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . c c c c . . . . 
+                . . . . . . c c 4 4 4 4 c c . . 
+                . . . . . c 4 4 4 4 4 4 4 4 c . 
+                . . . . c 4 4 4 f 1 4 4 4 4 4 c 
+                . . . c 4 4 4 4 f f 4 4 4 4 4 c 
+                . . . c 4 4 4 4 4 4 4 4 4 4 4 c 
+                . . c d 4 4 4 4 4 4 b 1 b b c c 
+                . . c d d d 4 4 4 4 4 3 3 3 4 c 
+                . . c d d d 4 4 4 4 4 4 4 4 b . 
+                . . c d d d d b 4 4 c b b c . . 
+                c c c d d d d b b 4 4 c b b c . 
+                c d d d d d d d d c c c c c c . 
+                . c c d d b 4 4 d c c c c . . . 
+                . . . c c b 4 4 c c c b b c . . 
+                . . . . . c 4 4 d c c c c c . . 
+                `],
+            100,
+            true
+            )
+            if (level <= 0 || level == 9) {
+                kaiju.setBounceOnWall(true)
+            }
+            tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
+        }
+    }
+    // Boss Counter
+    // 0: Pre boss, before boss room
+    // 1: Fighting boss in room
+    // 2: Post boss
+    if (level == 9 && bossCounter == 0) {
+        spawnBoss()
+        bossCounter += 1
+    } else if (level == 9 && bossCounter >= 2) {
+        tiles.setTileAt(tiles.getTileLocation(21, 13), assets.tile`myTile5`)
+        tiles.setTileAt(tiles.getTileLocation(21, 14), assets.tile`bottom door`)
+        for (let index = 0; index <= 7; index++) {
+            tiles.setTileAt(tiles.getTileLocation(5 + index * 2, 14), assets.tile`myTile0`)
         }
     }
 })
