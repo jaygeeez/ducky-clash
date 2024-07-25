@@ -679,6 +679,7 @@ function takeDamage () {
     scene.cameraShake(4, 500)
     scene.setBackgroundColor(10)
 }
+// Colour is set back to regular background colour after taking damage.
 function colourCheck () {
     if (level <= 2) {
         scene.setBackgroundColor(11)
@@ -1441,7 +1442,7 @@ let text_list = [
 "Start!",
 "quack!",
 "duck, but not really.",
-"play the game already.",
+"play the game!",
 "clash!"
 ]
 Ducky = sprites.create(img`
@@ -1782,7 +1783,7 @@ game.onUpdateInterval(1000, function () {
                 .........cc555555bc............
                 .........cc55555555c...........
                 ..........cccccccccc...........
-                `, BOSS, 25, 25)
+                `, BOSS, 20, 20)
             projectile2.setKind(SpriteKind.Enemy)
             scaling.scaleToPercent(projectile2, 40, ScaleDirection.Uniformly, ScaleAnchor.Middle)
             projectile2.follow(Ducky)
