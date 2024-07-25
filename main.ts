@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const BOSS = SpriteKind.create()
     export const TrueEnding = SpriteKind.create()
     export const FirstEnding = SpriteKind.create()
+    export const Invincible = SpriteKind.create()
 }
 function spawnBoss () {
     BOSS = sprites.create(img`
