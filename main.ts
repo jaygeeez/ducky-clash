@@ -1302,6 +1302,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 scene.onOverlapTile(SpriteKind.Enemy, assets.tile`bottom door`, function (sprite, location) {
     sprites.destroy(sprite)
 })
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`bottom door0`, function (sprite, location) {
+    sprites.destroy(sprite)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
     sprites.destroy(sprite, effects.warmRadial, 100)
@@ -2285,6 +2288,9 @@ game.onUpdateInterval(1500, function () {
             true
             )
             tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
+            if (kaiju.overlapsWith(Ducky)) {
+                tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
+            }
         }
     }
     // Boss Counter
