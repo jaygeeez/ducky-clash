@@ -1082,8 +1082,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.TrueEnding, function (sprite, ot
     otherSprite.sayText("Thank you for playing this long enough to find me lol", 5000, false)
     pause(5000)
     otherSprite.sayText("Bye bye!", 5000, false)
-    game.showLongText("Game over! :)", DialogLayout.Full)
-    game.reset()
+    game.setGameOverMessage(true, "You win!!!!!!!!")
+    game.gameOver(true)
 })
 function levelScreen (num: number) {
     if (num == 0) {
@@ -1293,9 +1293,9 @@ function levelScreen (num: number) {
 }
 info.onLifeZero(function () {
     music.stopAllSounds()
-    music.play(music.melodyPlayable(music.wawawawaa), music.PlaybackMode.InBackground)
-    game.showLongText("Game Over :(", DialogLayout.Top)
-    game.reset()
+    game.setGameOverMessage(false, "GAME OVER!")
+    game.setGameOverPlayable(false, music.melodyPlayable(music.wawawawaa), false)
+    game.gameOver(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
