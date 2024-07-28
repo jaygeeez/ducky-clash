@@ -656,6 +656,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Heart, function (sprite, otherSp
     sprites.destroy(otherSprite, effects.hearts, 100)
     info.changeLifeBy(1)
 })
+/**
+ * Maybe set sprite image to really small, set it back after placing on checkpoint?
+ */
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
     tiles.placeOnTile(sprite, checkpoint)
     music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.InBackground)
@@ -1346,6 +1349,23 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     colourCheck()
     pause(1000)
 })
+/**
+ * Things to fix
+ * 
+ * - Lose 2 damage when touching coral.
+ * 
+ * - game over instead of reset game (weird debug)
+ * 
+ * Things to add (maybe)
+ * 
+ * - Double boss or harder boss on true ending.
+ * 
+ * - cinematic game over screen
+ * 
+ * - different music on boss
+ * 
+ * - better jumping mechanics
+ */
 let kaiju: Sprite = null
 let projectile2: Sprite = null
 let bossAttacks = 0
@@ -2150,7 +2170,7 @@ game.onUpdateInterval(1000, function () {
             music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
         }
         if (Math.percentChance(35)) {
-            BOSS.setVelocity(randint(-20, 20), 0)
+            BOSS.setVelocity(randint(-30, 30), 0)
             BOSS.setBounceOnWall(false)
         }
     }
