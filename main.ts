@@ -1076,6 +1076,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile17`, function (sprite, location) {
+    sprite.sayText("Press up to go through doors :)", 1000, false)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.TrueEnding, function (sprite, otherSprite) {
     otherSprite.sayText("Hi, its me Josh, the guy who made the game!", 3000, false)
     pause(500)
@@ -1353,8 +1356,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
  * Things to fix
  * 
  * - Lose 2 damage when touching coral.
- * 
- * - game over instead of reset game (weird debug)
  * 
  * Things to add (maybe)
  * 
