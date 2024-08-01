@@ -670,6 +670,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.FirstEnding, function (sprite, o
     pause(1000)
     otherSprite.sayText("Maybe you can find your way to the true ending? ;)", 5000, false)
     pause(5000)
+    game.setGameOverScoringType(game.ScoringType.None)
+    game.setGameOverMessage(true, "Maybe go for true ending? ;)")
+    game.gameOver(true)
 })
 function takeDamage () {
     if (level == 9) {
@@ -1073,12 +1076,16 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile17`, function (sprite, location) {
+    sprite.sayText("Press up!", 1000, false)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.TrueEnding, function (sprite, otherSprite) {
     otherSprite.sayText("Hi, its me Josh, the guy who made the game!", 3000, false)
     pause(500)
     otherSprite.sayText("Thank you for playing this long enough to find me lol", 5000, false)
     pause(5000)
     otherSprite.sayText("Bye bye!", 5000, false)
+    game.setGameOverScoringType(game.ScoringType.HighScore)
     game.setGameOverMessage(true, "You win!!!!!!!!")
     game.gameOver(true)
 })
