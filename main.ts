@@ -7,6 +7,26 @@ namespace SpriteKind {
     export const FirstEnding = SpriteKind.create()
     export const Invincible = SpriteKind.create()
 }
+/**
+ * Things to fix
+ * 
+ * - Lose 2 damage when touching coral.
+ * 
+ * - game over instead of reset game (weird debug)
+ * 
+ * Things to add (maybe)
+ * 
+ * - Double boss or harder boss on true ending.
+ * 
+ * - cinematic game over screen
+ * 
+ * - different music on boss
+ * 
+ * - better jumping mechanics
+ */
+/**
+ * Maybe set sprite image to really small, set it back after placing on checkpoint?
+ */
 function spawnBoss () {
     BOSS = sprites.create(img`
         ........................
@@ -492,8 +512,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             animation.runImageAnimation(
             Ducky,
             [img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . b . . . 
+                . . . . . . . . . . b b . . . . 
                 . . . . . . . . . b 5 5 b . . . 
                 . . . . . . b b b b b b . . . . 
                 . . . . . b b 5 5 5 5 5 b . . . 
@@ -509,7 +529,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . . c b d d d d d 5 5 5 b b . . 
                 . . . c c c c c c c c b b . . . 
                 `,img`
-                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . b b b . . . 
                 . . . . . . . . . . b 5 b . . . 
                 . . . . . . . . . b 5 b . . . . 
                 . . . . . . b b b b b b . . . . 
@@ -1549,23 +1569,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     colourCheck()
     pause(1000)
 })
-/**
- * Things to fix
- * 
- * - Lose 2 damage when touching coral.
- * 
- * - game over instead of reset game (weird debug)
- * 
- * Things to add (maybe)
- * 
- * - Double boss or harder boss on true ending.
- * 
- * - cinematic game over screen
- * 
- * - different music on boss
- * 
- * - better jumping mechanics
- */
 let kaiju: Sprite = null
 let projectile2: Sprite = null
 let bossAttacks = 0
@@ -1901,9 +1904,6 @@ game.onUpdateInterval(5000, function () {
         )
     }
 })
-/**
- * Maybe set sprite image to really small, set it back after placing on checkpoint?
- */
 game.onUpdateInterval(1000, function () {
     if (level == 9 && bossCounter == 1) {
         bossAttacks = randint(0, 2)
@@ -2446,7 +2446,7 @@ game.onUpdateInterval(1500, function () {
             true
             )
             tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
-            if (kaiju.overlapsWith(Ducky)) {
+            while (kaiju.overlapsWith(Ducky)) {
                 tiles.placeOnRandomTile(kaiju, assets.tile`transparency16`)
             }
         }
