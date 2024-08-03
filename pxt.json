@@ -1,5 +1,6 @@
 {
     "name": "Ducky Clash By Josh",
+    "version": "1.0.0",
     "description": "",
     "dependencies": {
         "device": "*",
