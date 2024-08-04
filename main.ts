@@ -889,6 +889,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sp
         game.showLongText("Just press A.", DialogLayout.Bottom)
         game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
         Ducks_can_fly = true
+        bossCounter = 0
     }
     tiles.setTileAt(location, assets.tile`transparency16`)
 })
@@ -1587,6 +1588,7 @@ let Ducks_can_fly = false
 let BUBBLE_Jump = false
 let DUCK_Tape = false
 let fireQUACKer = false
+let bossCounter = 0
 let level = 0
 let Ducky: Sprite = null
 scene.setBackgroundColor(12)
@@ -1808,7 +1810,7 @@ music.play(music.createSong(assets.song`JERSEY`), music.PlaybackMode.LoopingInBa
 sprites.destroy(Title)
 scene.setBackgroundColor(11)
 level = 0
-let bossCounter = 0
+bossCounter = 0
 fireQUACKer = false
 DUCK_Tape = false
 BUBBLE_Jump = false
