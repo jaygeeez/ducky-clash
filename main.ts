@@ -838,8 +838,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.FirstEnding, function (sprite, o
     pause(1000)
     otherSprite.sayText("Maybe you can find your way to the true ending? ;)", 5000, false)
     pause(5000)
-    game.setGameOverScoringType(game.ScoringType.None)
-    game.setGameOverMessage(true, "Maybe go for true ending? ;)")
+    game.setGameOverScoringType(game.ScoringType.LowScore)
     game.gameOver(true)
 })
 function takeDamage () {
@@ -1667,13 +1666,6 @@ let Title = sprites.create(img`
     ....................................................................................................
     `, SpriteKind.Title)
 Title.setPosition(80, 41)
-let text_list = [
-"Start!",
-"quack!",
-"duck, but not really.",
-"play the game!",
-"clash!"
-]
 Ducky = sprites.create(img`
     . . . . . . . . . . b 5 b . . . 
     . . . . . . . . . b 5 b . . . . 
@@ -1801,7 +1793,7 @@ game.setDialogFrame(img`
     .....aaa............dddd............dddd...........33.......33....
     ..................................................................
     `)
-game.showLongText("Press A to " + text_list[randint(0, 4)], DialogLayout.Bottom)
+game.showLongText("Press A to start!", DialogLayout.Bottom)
 Ducky.sayText("Let's GO!", 1000, true)
 music.stopAllSounds()
 scene.setBackgroundColor(9)
