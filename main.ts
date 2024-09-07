@@ -6,6 +6,7 @@ namespace SpriteKind {
     export const TrueEnding = SpriteKind.create()
     export const FirstEnding = SpriteKind.create()
     export const Invincible = SpriteKind.create()
+    export const Text = SpriteKind.create()
 }
 /**
  * Things to fix
