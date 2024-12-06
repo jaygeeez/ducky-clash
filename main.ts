@@ -1809,12 +1809,13 @@ BUBBLE_Jump = false
 Ducks_can_fly = false
 refresh = true
 direction = 100
-levelScreen(level)
 info.setLife(5)
 controller.moveSprite(Ducky, 100, 0)
 Ducky.setStayInScreen(true)
 Ducky.ay = 400
 scene.cameraFollowSprite(Ducky)
+let World = game.askForNumber("ENTER WORLD NUMBER", 1)
+levelScreen(level)
 game.onUpdateInterval(1500, function () {
     if (level >= 1 || BUBBLE_Jump == true) {
         if (level <= 8) {
