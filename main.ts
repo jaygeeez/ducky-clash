@@ -1814,8 +1814,21 @@ controller.moveSprite(Ducky, 100, 0)
 Ducky.setStayInScreen(true)
 Ducky.ay = 400
 scene.cameraFollowSprite(Ducky)
-let World = game.askForNumber("ENTER WORLD NUMBER", 1)
-levelScreen(level)
+let World = 0
+let TM_21 = tilemap`level51`
+let tilemap2 = tilemap`level53`
+tileUtil.connectMaps(TM_21, tilemap2, MapConnectionKind.Door1)
+while (World == 0) {
+    World = game.askForNumber("ENTER WORLD NUMBER", 1)
+    if (World == 1) {
+        levelScreen(level)
+    } else if (World == 2) {
+        tiles.setCurrentTilemap(TM_21)
+    } else {
+        game.showLongText("INVALID NUMBER", DialogLayout.Bottom)
+        World = 0
+    }
+}
 game.onUpdateInterval(1500, function () {
     if (level >= 1 || BUBBLE_Jump == true) {
         if (level <= 8) {
