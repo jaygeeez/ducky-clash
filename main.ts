@@ -1816,8 +1816,6 @@ Ducky.ay = 400
 scene.cameraFollowSprite(Ducky)
 let World = 0
 let TM_21 = tilemap`level51`
-let tilemap2 = tilemap`level53`
-tileUtil.connectMaps(TM_21, tilemap2, MapConnectionKind.Door1)
 while (World == 0) {
     World = game.askForNumber("ENTER WORLD NUMBER", 1)
     if (World == 1) {
