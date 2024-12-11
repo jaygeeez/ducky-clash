@@ -8,28 +8,6 @@ namespace SpriteKind {
     export const Invincible = SpriteKind.create()
     export const Text = SpriteKind.create()
 }
-/**
- * Finish cues for 3rd and 4th powerup
- * 
- * Bubble Jump + Jumps Can Fly
- */
-/**
- * Things to fix
- * 
- * - Lose 2 damage when touching coral.
- * 
- * - game over instead of reset game (weird debug)
- * 
- * Things to add (maybe)
- * 
- * - Double boss or harder boss on true ending.
- * 
- * - cinematic game over screen
- * 
- * - different music on boss
- * 
- * - better jumping mechanics
- */
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     takeDamage()
     scene.cameraShake(4, 500)
@@ -555,12 +533,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Ducky.vy = -150
     } else if (Ducky.isHittingTile(CollisionDirection.Left) && PowerUps[1] == true) {
         Ducky.vy = -150
-    } else if (refresh == true && BUBBLE_Jump == true) {
+    } else if (refresh == true && PowerUps[2] == true) {
         Ducky.startEffect(effects.bubbles, 100)
         Ducky.startEffect(effects.bubbles, 200)
         Ducky.startEffect(effects.bubbles, 500)
         Ducky.vy = -150
-        if (Ducks_can_fly == false) {
+        if (PowerUps[3] == false) {
             refresh = false
         }
     }
@@ -833,6 +811,54 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             info.changeScoreBy(-1)
         }
     }
+})
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    if (!(Ducky.isHittingTile(CollisionDirection.Bottom))) {
+        if (Ducky.isHittingTile(CollisionDirection.Right) && PowerUps[1] == true) {
+            Ducky.setImage(img`
+                . . . . . . . . . b 5 b . . . . 
+                . . . . . . . . . b 5 b . . . . 
+                . . . . . . b b b b b b . . . . 
+                . . . . . b b 5 5 5 5 5 b . . . 
+                . . . . b b 5 b c 5 5 d 4 c . . 
+                . b b b b 5 5 5 b f d d 4 4 4 b 
+                . b d 5 b 5 5 b c b 4 4 4 4 b . 
+                . . b 5 5 b 5 5 5 4 4 4 4 b f f 
+                . . b d 5 5 b 5 5 5 5 5 5 b f f 
+                . b d b 5 5 5 d 5 5 5 5 5 5 f f 
+                b d d c d 5 5 b 5 5 5 5 5 5 f f 
+                c d d d c c b 5 5 5 5 5 5 5 f f 
+                c b d d d d d 5 5 5 5 5 5 5 f f 
+                . c d d d d d d 5 5 5 5 5 d f f 
+                . . c b d d d d d 5 5 5 b b . . 
+                . . . c c c c c c c c b b . . . 
+                `)
+            refresh = true
+        } else if (Ducky.isHittingTile(CollisionDirection.Left) && PowerUps[1] == true) {
+            Ducky.setImage(img`
+                . . . . b 5 b . . . . . . . . . 
+                . . . . b 5 b . . . . . . . . . 
+                . . . . b b b b b b . . . . . . 
+                . . . b 5 5 5 5 5 b b . . . . . 
+                . . c 4 d 5 5 c b 5 b b . . . . 
+                b 4 4 4 d d f b 5 5 5 b b b b . 
+                . b 4 4 4 4 b c b 5 5 b 5 d b . 
+                . . b 4 4 4 4 5 5 5 b 5 5 b . . 
+                f f b 5 5 5 5 5 5 b 5 5 d b . . 
+                f f 5 5 5 5 5 5 d 5 5 5 b d b . 
+                f f 5 5 5 5 5 5 b 5 5 d c d d b 
+                f f 5 5 5 5 5 5 5 b c c d d d c 
+                f f 5 5 5 5 5 5 5 d d d d d b c 
+                f f d 5 5 5 5 5 d d d d d d c . 
+                . . b b 5 5 5 d d d d d b c . . 
+                . . . b b c c c c c c c c . . . 
+                `)
+            refresh = true
+        }
+    } else {
+        refresh = true
+    }
+    Ducky.ay = 400
 })
 sprites.onCreated(SpriteKind.Player, function (sprite) {
     if (level >= 1) {
@@ -1166,39 +1192,6 @@ function colourCheck () {
         scene.setBackgroundColor(12)
     }
 }
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`myTile`)
-    if (level == 1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
-        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
-        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
-        PowerUps[0] = true
-        fireQUACKer = true
-        info.setScore(10)
-    } else if (level == 4) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
-        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
-        PowerUps[1] = true
-    } else if (level == 7) {
-        checkpoint = tiles.getTileLocation(29, 13)
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
-        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
-        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
-        BUBBLE_Jump = true
-    } else if (level == -1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
-        game.showLongText("You can fly.", DialogLayout.Bottom)
-        game.showLongText("Just press A.", DialogLayout.Bottom)
-        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
-        Ducks_can_fly = true
-        bossCounter = 0
-    }
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
 statusbars.onZero(StatusBarKind.Health, function (status) {
     BOSS.setVelocity(0, 0)
     BOSS.ay = 0
@@ -1283,7 +1276,7 @@ function levelScreen (num: number) {
     } else if (num == 1) {
         tiles.setCurrentTilemap(tilemap`level13`)
         checkpoint = tiles.getTileLocation(1, 14)
-        if (fireQUACKer == false) {
+        if ((0 as any) == (false as any)) {
             tiles.setTileAt(tiles.getTileLocation(28, 1), sprites.dungeon.chestClosed)
         } else {
             tiles.setTileAt(tiles.getTileLocation(28, 1), assets.tile`myTile`)
@@ -1297,7 +1290,7 @@ function levelScreen (num: number) {
     } else if (num == 4) {
         tiles.setCurrentTilemap(tilemap`level32`)
         checkpoint = tiles.getTileLocation(2, 11)
-        if (DUCK_Tape == false) {
+        if ((0 as any) == (false as any)) {
             tiles.setTileAt(tiles.getTileLocation(7, 6), sprites.dungeon.chestClosed)
         } else {
             tiles.setTileAt(tiles.getTileLocation(7, 6), assets.tile`myTile`)
@@ -1311,7 +1304,7 @@ function levelScreen (num: number) {
     } else if (num == 7) {
         tiles.setCurrentTilemap(tilemap`Room 1`)
         checkpoint = tiles.getTileLocation(2, 1)
-        if (BUBBLE_Jump == false) {
+        if ((0 as any) == (false as any)) {
             tiles.setTileAt(tiles.getTileLocation(29, 13), sprites.dungeon.chestClosed)
         } else {
             tiles.setTileAt(tiles.getTileLocation(29, 13), assets.tile`myTile`)
@@ -1473,7 +1466,7 @@ function levelScreen (num: number) {
     } else if (num == -1) {
         tiles.setCurrentTilemap(tilemap`level47`)
         checkpoint = tiles.getTileLocation(2, 7)
-        if (Ducks_can_fly == false) {
+        if ((0 as any) == (false as any)) {
             tiles.setTileAt(tiles.getTileLocation(14, 2), sprites.dungeon.chestClosed)
         } else {
             tiles.setTileAt(tiles.getTileLocation(14, 2), assets.tile`myTile`)
@@ -1482,6 +1475,38 @@ function levelScreen (num: number) {
     tiles.placeOnTile(Ducky, checkpoint)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile`)
+    if (level == 1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
+        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
+        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
+        PowerUps[0] = true
+        info.setScore(10)
+    } else if (level == 4) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
+        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
+        PowerUps[1] = true
+    } else if (level == 7) {
+        checkpoint = tiles.getTileLocation(29, 13)
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
+        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
+        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
+        PowerUps[2] = true
+    } else if (level == -1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
+        game.showLongText("You can fly.", DialogLayout.Bottom)
+        game.showLongText("Just press A.", DialogLayout.Bottom)
+        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
+        PowerUps[3] = true
+        bossCounter = 0
+    }
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     direction = -100
     animation.runImageAnimation(
@@ -1589,10 +1614,6 @@ let statusbar: StatusBarSprite = null
 let BOSS: Sprite = null
 let direction = 0
 let refresh = false
-let Ducks_can_fly = false
-let BUBBLE_Jump = false
-let DUCK_Tape = false
-let fireQUACKer = false
 let PowerUps: boolean[] = []
 let bossCounter = 0
 let level = 0
@@ -1810,17 +1831,17 @@ sprites.destroy(Title)
 scene.setBackgroundColor(11)
 level = 0
 bossCounter = 0
+// 0 = fireQuacker
+// 1 = DUCK Tape
+// 2 = BUBBLE Jump
+// 3 = Ducks Can Fly
 PowerUps = [
 false,
 false,
 false,
 false
 ]
-fireQUACKer = false
-DUCK_Tape = false
-BUBBLE_Jump = false
-Ducks_can_fly = false
-refresh = true
+refresh = false
 direction = 100
 info.setLife(5)
 controller.moveSprite(Ducky, 100, 0)
@@ -1829,7 +1850,7 @@ Ducky.ay = 400
 scene.cameraFollowSprite(Ducky)
 levelScreen(level)
 game.onUpdateInterval(1500, function () {
-    if (level >= 1 || BUBBLE_Jump == true) {
+    if (level >= 1 || (0 as any) == (true as any)) {
         if (level <= 8) {
             kaiju = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
@@ -1980,54 +2001,6 @@ game.onUpdateInterval(1500, function () {
             tiles.setTileAt(tiles.getTileLocation(5 + index * 2, 14), assets.tile`myTile0`)
         }
     }
-})
-game.onUpdate(function () {
-    if (!(Ducky.isHittingTile(CollisionDirection.Bottom))) {
-        if (Ducky.isHittingTile(CollisionDirection.Right) && PowerUps[1] == true) {
-            Ducky.setImage(img`
-                . . . . . . . . . b 5 b . . . . 
-                . . . . . . . . . b 5 b . . . . 
-                . . . . . . b b b b b b . . . . 
-                . . . . . b b 5 5 5 5 5 b . . . 
-                . . . . b b 5 b c 5 5 d 4 c . . 
-                . b b b b 5 5 5 b f d d 4 4 4 b 
-                . b d 5 b 5 5 b c b 4 4 4 4 b . 
-                . . b 5 5 b 5 5 5 4 4 4 4 b f f 
-                . . b d 5 5 b 5 5 5 5 5 5 b f f 
-                . b d b 5 5 5 d 5 5 5 5 5 5 f f 
-                b d d c d 5 5 b 5 5 5 5 5 5 f f 
-                c d d d c c b 5 5 5 5 5 5 5 f f 
-                c b d d d d d 5 5 5 5 5 5 5 f f 
-                . c d d d d d d 5 5 5 5 5 d f f 
-                . . c b d d d d d 5 5 5 b b . . 
-                . . . c c c c c c c c b b . . . 
-                `)
-            refresh = true
-        } else if (Ducky.isHittingTile(CollisionDirection.Left) && PowerUps[1] == true) {
-            Ducky.setImage(img`
-                . . . . b 5 b . . . . . . . . . 
-                . . . . b 5 b . . . . . . . . . 
-                . . . . b b b b b b . . . . . . 
-                . . . b 5 5 5 5 5 b b . . . . . 
-                . . c 4 d 5 5 c b 5 b b . . . . 
-                b 4 4 4 d d f b 5 5 5 b b b b . 
-                . b 4 4 4 4 b c b 5 5 b 5 d b . 
-                . . b 4 4 4 4 5 5 5 b 5 5 b . . 
-                f f b 5 5 5 5 5 5 b 5 5 d b . . 
-                f f 5 5 5 5 5 5 d 5 5 5 b d b . 
-                f f 5 5 5 5 5 5 b 5 5 d c d d b 
-                f f 5 5 5 5 5 5 5 b c c d d d c 
-                f f 5 5 5 5 5 5 5 d d d d d b c 
-                f f d 5 5 5 5 5 d d d d d d c . 
-                . . b b 5 5 5 d d d d d b c . . 
-                . . . b b c c c c c c c c . . . 
-                `)
-            refresh = true
-        }
-    } else {
-        refresh = true
-    }
-    Ducky.ay = 400
 })
 game.onUpdateInterval(5000, function () {
     if (PowerUps[0] == true) {
