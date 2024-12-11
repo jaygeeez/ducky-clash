@@ -9,6 +9,11 @@ namespace SpriteKind {
     export const Text = SpriteKind.create()
 }
 /**
+ * Finish cues for 3rd and 4th powerup
+ * 
+ * Bubble Jump + Jumps Can Fly
+ */
+/**
  * Things to fix
  * 
  * - Lose 2 damage when touching coral.
