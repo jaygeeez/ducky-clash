@@ -546,9 +546,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             false
             )
         }
-    } else if (Ducky.isHittingTile(CollisionDirection.Right) && DUCK_Tape == true) {
+    } else if (Ducky.isHittingTile(CollisionDirection.Right) && PowerUps[1] == true) {
         Ducky.vy = -150
-    } else if (Ducky.isHittingTile(CollisionDirection.Left) && DUCK_Tape == true) {
+    } else if (Ducky.isHittingTile(CollisionDirection.Left) && PowerUps[1] == true) {
         Ducky.vy = -150
     } else if (refresh == true && BUBBLE_Jump == true) {
         Ducky.startEffect(effects.bubbles, 100)
@@ -633,6 +633,202 @@ function levelScreen2 (num: number) {
     tiles.placeOnTile(Ducky, checkpoint)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (PowerUps[0] == true) {
+        if (info.score() > 0) {
+            music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
+            if (direction == 100) {
+                projectile = sprites.createProjectileFromSprite(img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . 2 2 2 2 . . . 
+                    . . . . . . . 2 2 1 1 1 1 2 . . 
+                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                    . . . . . . 2 2 3 1 1 1 1 2 . . 
+                    . . . . . . . . . 2 2 2 2 . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `, Ducky, 250, 0)
+                animation.runImageAnimation(
+                projectile,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . 2 2 2 2 . . . 
+                    . . . . . . . 2 2 1 1 1 1 2 . . 
+                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                    . . . . . . 2 2 3 1 1 1 1 2 . . 
+                    . . . . . . . . . 2 2 2 2 . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . 1 1 3 . . . . . . 
+                    . . . . . . 1 3 . 3 3 . . . . . 
+                    . . . . . . 1 . . . 3 2 2 3 . . 
+                    . . . . . 1 3 . . . 2 2 1 3 3 . 
+                    . . . . . 1 3 . 2 2 3 1 1 1 3 . 
+                    . . 2 2 2 1 3 3 3 3 3 1 1 1 3 . 
+                    . . 1 1 1 1 3 1 1 1 1 1 1 1 3 . 
+                    . . 2 2 2 1 3 3 3 3 3 1 1 1 3 . 
+                    . . . . . 1 3 . 2 2 3 1 1 1 3 . 
+                    . . . . . 1 3 . . . 2 2 1 3 3 . 
+                    . . . . . . 1 . . . 3 2 2 3 . . 
+                    . . . . . . 1 3 . 3 3 . . . . . 
+                    . . . . . . . 1 1 3 . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 3 3 . . . 3 . . . . . 
+                    . . . . 3 3 . . . . 3 3 . . . . 
+                    . . . . 3 . . . . . . 3 3 . . . 
+                    . . . . . . . . . . . . 3 . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . 3 . . . . . . . . . . . . . 
+                    . . 3 . . . . . . . . . . 3 . . 
+                    . . 3 . . . . . . . . . . 3 . . 
+                    . . . . . . . . . . . . . 3 . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . 3 . . . . . . . . . . . . 
+                    . . . 3 3 . . . . . . 3 . . . . 
+                    . . . . 3 3 . . . . 3 3 . . . . 
+                    . . . . . . . . . 3 3 . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
+                100,
+                true
+                )
+            } else {
+                projectile = sprites.createProjectileFromSprite(img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . 2 2 2 2 . . . . . . . . . 
+                    . . 2 1 1 1 1 2 2 . . . . . . . 
+                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                    . . 2 1 1 1 1 3 2 2 . . . . . . 
+                    . . . 2 2 2 2 . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `, Ducky, -250, 0)
+                animation.runImageAnimation(
+                projectile,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . 2 2 2 2 . . . . . . . . . 
+                    . . 2 1 1 1 1 2 2 . . . . . . . 
+                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                    . . 2 1 1 1 1 3 2 2 . . . . . . 
+                    . . . 2 2 2 2 . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . 3 1 1 . . . . . . . 
+                    . . . . . 3 3 . 3 1 . . . . . . 
+                    . . 3 2 2 3 . . . 1 . . . . . . 
+                    . 3 3 1 2 2 . . . 3 1 . . . . . 
+                    . 3 1 1 1 3 2 2 . 3 1 . . . . . 
+                    . 3 1 1 1 3 3 3 3 3 1 2 2 2 . . 
+                    . 3 1 1 1 1 1 1 1 3 1 1 1 1 . . 
+                    . 3 1 1 1 3 3 3 3 3 1 2 2 2 . . 
+                    . 3 1 1 1 3 2 2 . 3 1 . . . . . 
+                    . 3 3 1 2 2 . . . 3 1 . . . . . 
+                    . . 3 2 2 3 . . . 1 . . . . . . 
+                    . . . . . 3 3 . 3 1 . . . . . . 
+                    . . . . . . 3 1 1 . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 3 . . . 3 3 . . . . . 
+                    . . . . 3 3 . . . . 3 3 . . . . 
+                    . . . 3 3 . . . . . . 3 . . . . 
+                    . . . 3 . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . 3 . . 
+                    . . 3 . . . . . . . . . . 3 . . 
+                    . . 3 . . . . . . . . . . 3 . . 
+                    . . 3 . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . 3 . . . 
+                    . . . . 3 . . . . . . 3 3 . . . 
+                    . . . . 3 3 . . . . 3 3 . . . . 
+                    . . . . . 3 3 . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
+                100,
+                true
+                )
+            }
+            projectile.setFlag(SpriteFlag.GhostThroughWalls, true)
+            info.changeScoreBy(-1)
+        }
+    }
+})
 sprites.onCreated(SpriteKind.Player, function (sprite) {
     if (level >= 1) {
         tiles.placeOnTile(sprite, checkpoint)
@@ -965,6 +1161,39 @@ function colourCheck () {
         scene.setBackgroundColor(12)
     }
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile`)
+    if (level == 1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
+        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
+        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
+        PowerUps[0] = true
+        fireQUACKer = true
+        info.setScore(10)
+    } else if (level == 4) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
+        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
+        PowerUps[1] = true
+    } else if (level == 7) {
+        checkpoint = tiles.getTileLocation(29, 13)
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
+        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
+        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
+        BUBBLE_Jump = true
+    } else if (level == -1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
+        game.showLongText("You can fly.", DialogLayout.Bottom)
+        game.showLongText("Just press A.", DialogLayout.Bottom)
+        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
+        Ducks_can_fly = true
+        bossCounter = 0
+    }
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 statusbars.onZero(StatusBarKind.Health, function (status) {
     BOSS.setVelocity(0, 0)
     BOSS.ay = 0
@@ -983,202 +1212,6 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile17`, function (sprite, location) {
     sprite.sayText("Press up!", 1000, false)
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (fireQUACKer == true) {
-        if (info.score() > 0) {
-            music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
-            if (direction == 100) {
-                projectile = sprites.createProjectileFromSprite(img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . 2 2 2 2 . . . 
-                    . . . . . . . 2 2 1 1 1 1 2 . . 
-                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                    . . . . . . 2 2 3 1 1 1 1 2 . . 
-                    . . . . . . . . . 2 2 2 2 . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `, Ducky, 250, 0)
-                animation.runImageAnimation(
-                projectile,
-                [img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
-                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . 2 2 2 2 . . . 
-                    . . . . . . . 2 2 1 1 1 1 2 . . 
-                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                    . . . . . . 2 2 3 1 1 1 1 2 . . 
-                    . . . . . . . . . 2 2 2 2 . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . 1 1 3 . . . . . . 
-                    . . . . . . 1 3 . 3 3 . . . . . 
-                    . . . . . . 1 . . . 3 2 2 3 . . 
-                    . . . . . 1 3 . . . 2 2 1 3 3 . 
-                    . . . . . 1 3 . 2 2 3 1 1 1 3 . 
-                    . . 2 2 2 1 3 3 3 3 3 1 1 1 3 . 
-                    . . 1 1 1 1 3 1 1 1 1 1 1 1 3 . 
-                    . . 2 2 2 1 3 3 3 3 3 1 1 1 3 . 
-                    . . . . . 1 3 . 2 2 3 1 1 1 3 . 
-                    . . . . . 1 3 . . . 2 2 1 3 3 . 
-                    . . . . . . 1 . . . 3 2 2 3 . . 
-                    . . . . . . 1 3 . 3 3 . . . . . 
-                    . . . . . . . 1 1 3 . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 3 3 . . . 3 . . . . . 
-                    . . . . 3 3 . . . . 3 3 . . . . 
-                    . . . . 3 . . . . . . 3 3 . . . 
-                    . . . . . . . . . . . . 3 . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . 3 . . . . . . . . . . . . . 
-                    . . 3 . . . . . . . . . . 3 . . 
-                    . . 3 . . . . . . . . . . 3 . . 
-                    . . . . . . . . . . . . . 3 . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . 3 . . . . . . . . . . . . 
-                    . . . 3 3 . . . . . . 3 . . . . 
-                    . . . . 3 3 . . . . 3 3 . . . . 
-                    . . . . . . . . . 3 3 . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `],
-                100,
-                true
-                )
-            } else {
-                projectile = sprites.createProjectileFromSprite(img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . 2 2 2 2 . . . . . . . . . 
-                    . . 2 1 1 1 1 2 2 . . . . . . . 
-                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                    . . 2 1 1 1 1 3 2 2 . . . . . . 
-                    . . . 2 2 2 2 . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `, Ducky, -250, 0)
-                animation.runImageAnimation(
-                projectile,
-                [img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
-                    . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . 2 2 2 2 . . . . . . . . . 
-                    . . 2 1 1 1 1 2 2 . . . . . . . 
-                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                    . . 2 1 1 1 1 3 2 2 . . . . . . 
-                    . . . 2 2 2 2 . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . 3 1 1 . . . . . . . 
-                    . . . . . 3 3 . 3 1 . . . . . . 
-                    . . 3 2 2 3 . . . 1 . . . . . . 
-                    . 3 3 1 2 2 . . . 3 1 . . . . . 
-                    . 3 1 1 1 3 2 2 . 3 1 . . . . . 
-                    . 3 1 1 1 3 3 3 3 3 1 2 2 2 . . 
-                    . 3 1 1 1 1 1 1 1 3 1 1 1 1 . . 
-                    . 3 1 1 1 3 3 3 3 3 1 2 2 2 . . 
-                    . 3 1 1 1 3 2 2 . 3 1 . . . . . 
-                    . 3 3 1 2 2 . . . 3 1 . . . . . 
-                    . . 3 2 2 3 . . . 1 . . . . . . 
-                    . . . . . 3 3 . 3 1 . . . . . . 
-                    . . . . . . 3 1 1 . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 3 . . . 3 3 . . . . . 
-                    . . . . 3 3 . . . . 3 3 . . . . 
-                    . . . 3 3 . . . . . . 3 . . . . 
-                    . . . 3 . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . 3 . . 
-                    . . 3 . . . . . . . . . . 3 . . 
-                    . . 3 . . . . . . . . . . 3 . . 
-                    . . 3 . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . 3 . . . 
-                    . . . . 3 . . . . . . 3 3 . . . 
-                    . . . . 3 3 . . . . 3 3 . . . . 
-                    . . . . . 3 3 . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `],
-                100,
-                true
-                )
-            }
-            projectile.setFlag(SpriteFlag.GhostThroughWalls, true)
-            info.changeScoreBy(-1)
-        }
-    }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
     sprites.destroy(sprite)
@@ -1444,38 +1477,6 @@ function levelScreen (num: number) {
     tiles.placeOnTile(Ducky, checkpoint)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 }
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`myTile`)
-    if (level == 1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
-        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
-        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
-        fireQUACKer = true
-        info.setScore(10)
-    } else if (level == 4) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
-        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
-        DUCK_Tape = true
-    } else if (level == 7) {
-        checkpoint = tiles.getTileLocation(29, 13)
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
-        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
-        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
-        BUBBLE_Jump = true
-    } else if (level == -1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
-        game.showLongText("You can fly.", DialogLayout.Bottom)
-        game.showLongText("Just press A.", DialogLayout.Bottom)
-        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
-        Ducks_can_fly = true
-        bossCounter = 0
-    }
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     direction = -100
     animation.runImageAnimation(
@@ -1587,6 +1588,7 @@ let Ducks_can_fly = false
 let BUBBLE_Jump = false
 let DUCK_Tape = false
 let fireQUACKer = false
+let PowerUps: boolean[] = []
 let bossCounter = 0
 let level = 0
 let Ducky: Sprite = null
@@ -1803,6 +1805,12 @@ sprites.destroy(Title)
 scene.setBackgroundColor(11)
 level = 0
 bossCounter = 0
+PowerUps = [
+false,
+false,
+false,
+false
+]
 fireQUACKer = false
 DUCK_Tape = false
 BUBBLE_Jump = false
@@ -1970,7 +1978,7 @@ game.onUpdateInterval(1500, function () {
 })
 game.onUpdate(function () {
     if (!(Ducky.isHittingTile(CollisionDirection.Bottom))) {
-        if (Ducky.isHittingTile(CollisionDirection.Right) && DUCK_Tape == true) {
+        if (Ducky.isHittingTile(CollisionDirection.Right) && PowerUps[1] == true) {
             Ducky.setImage(img`
                 . . . . . . . . . b 5 b . . . . 
                 . . . . . . . . . b 5 b . . . . 
@@ -1990,7 +1998,7 @@ game.onUpdate(function () {
                 . . . c c c c c c c c b b . . . 
                 `)
             refresh = true
-        } else if (Ducky.isHittingTile(CollisionDirection.Left) && DUCK_Tape == true) {
+        } else if (Ducky.isHittingTile(CollisionDirection.Left) && PowerUps[1] == true) {
             Ducky.setImage(img`
                 . . . . b 5 b . . . . . . . . . 
                 . . . . b 5 b . . . . . . . . . 
@@ -2017,7 +2025,7 @@ game.onUpdate(function () {
     Ducky.ay = 400
 })
 game.onUpdateInterval(5000, function () {
-    if (fireQUACKer == true) {
+    if (PowerUps[0] == true) {
         ammo = sprites.create(img`
             ....................
             ....................
