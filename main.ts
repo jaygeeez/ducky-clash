@@ -1585,6 +1585,53 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     true
     )
 })
+sprites.onCreated(SpriteKind.Player, function (sprite) {
+    info.setLife(5)
+    sprite.setPosition(76, 96)
+    sprite.sayText("Let's GO!", 1000, true)
+    sprite.setStayInScreen(true)
+    animation.runImageAnimation(
+    sprite,
+    [img`
+        . . . . . . . . . . b 5 b . . . 
+        . . . . . . . . . b 5 b . . . . 
+        . . . . . . b b b b b b . . . . 
+        . . . . . b b 5 5 5 5 5 b . . . 
+        . . . . b b 5 d 1 f 5 d 4 c . . 
+        . . . . b 5 5 1 f f d d 4 4 4 b 
+        . . . . b 5 5 d f b 4 4 4 4 b . 
+        . . . b d 5 5 5 5 4 4 4 4 b . . 
+        . b b d d d 5 5 5 5 5 5 5 b . . 
+        b d d d b b b 5 5 5 5 5 5 5 b . 
+        c d d b 5 5 d c 5 5 5 5 5 5 b . 
+        c b b d 5 d c d 5 5 5 5 5 5 b . 
+        c b 5 5 b c d d 5 5 5 5 5 5 b . 
+        b b c c c d d d 5 5 5 5 5 d b . 
+        . . . . c c d d d 5 5 5 b b . . 
+        . . . . . . c c c c c b b . . . 
+        `,img`
+        . . . . . . . . . . b 5 b . . . 
+        . . . . . . . . . b 5 b . . . . 
+        . . . . . . b b b b b b . . . . 
+        . . . . . b b 5 5 5 5 5 b . . . 
+        . . . . b b 5 d 1 f 5 5 d f . . 
+        . . . . b 5 5 1 f f 5 d 4 c . . 
+        . . . . b 5 5 d f b d d 4 4 . . 
+        . b b b d 5 5 5 5 5 4 4 4 4 4 b 
+        b d d d b b d 5 5 4 4 4 4 4 b . 
+        b b d 5 5 5 b 5 5 5 5 5 5 b . . 
+        c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
+        c b d c d 5 5 b 5 5 5 5 5 5 b . 
+        . c d d c c b d 5 5 5 5 5 d b . 
+        . . c d d d d d 5 5 5 5 5 b . . 
+        . . . b d d d d d 5 5 5 b . . . 
+        . . . c c c c c c c c b b . . . 
+        `],
+    300,
+    true
+    )
+    controller.moveSprite(sprite, 100, 0)
+})
 scene.onOverlapTile(SpriteKind.Enemy, assets.tile`bottom door`, function (sprite, location) {
     sprites.destroy(sprite)
 })
@@ -1797,59 +1844,14 @@ Ducky = sprites.create(img`
     . . . c c c c c c c c b b . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-Ducky.setPosition(76, 96)
-Ducky.sayText("Let's GO!", 1000, true)
-Ducky.setStayInScreen(true)
-animation.runImageAnimation(
-Ducky,
-[img`
-    . . . . . . . . . . b 5 b . . . 
-    . . . . . . . . . b 5 b . . . . 
-    . . . . . . b b b b b b . . . . 
-    . . . . . b b 5 5 5 5 5 b . . . 
-    . . . . b b 5 d 1 f 5 d 4 c . . 
-    . . . . b 5 5 1 f f d d 4 4 4 b 
-    . . . . b 5 5 d f b 4 4 4 4 b . 
-    . . . b d 5 5 5 5 4 4 4 4 b . . 
-    . b b d d d 5 5 5 5 5 5 5 b . . 
-    b d d d b b b 5 5 5 5 5 5 5 b . 
-    c d d b 5 5 d c 5 5 5 5 5 5 b . 
-    c b b d 5 d c d 5 5 5 5 5 5 b . 
-    c b 5 5 b c d d 5 5 5 5 5 5 b . 
-    b b c c c d d d 5 5 5 5 5 d b . 
-    . . . . c c d d d 5 5 5 b b . . 
-    . . . . . . c c c c c b b . . . 
-    `,img`
-    . . . . . . . . . . b 5 b . . . 
-    . . . . . . . . . b 5 b . . . . 
-    . . . . . . b b b b b b . . . . 
-    . . . . . b b 5 5 5 5 5 b . . . 
-    . . . . b b 5 d 1 f 5 5 d f . . 
-    . . . . b 5 5 1 f f 5 d 4 c . . 
-    . . . . b 5 5 d f b d d 4 4 . . 
-    . b b b d 5 5 5 5 5 4 4 4 4 4 b 
-    b d d d b b d 5 5 4 4 4 4 4 b . 
-    b b d 5 5 5 b 5 5 5 5 5 5 b . . 
-    c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
-    c b d c d 5 5 b 5 5 5 5 5 5 b . 
-    . c d d c c b d 5 5 5 5 5 d b . 
-    . . c d d d d d 5 5 5 5 5 b . . 
-    . . . b d d d d d 5 5 5 b . . . 
-    . . . c c c c c c c c b b . . . 
-    `],
-300,
-true
-)
 music.stopAllSounds()
 scene.setBackgroundColor(9)
 music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
 music.play(music.createSong(assets.song`JERSEY`), music.PlaybackMode.LoopingInBackground)
-sprites.destroy(Title)
-scene.setBackgroundColor(11)
-info.setLife(5)
-controller.moveSprite(Ducky, 100, 0)
 Ducky.ay = 400
 scene.cameraFollowSprite(Ducky)
+sprites.destroy(Title)
+scene.setBackgroundColor(11)
 levelScreen(level)
 game.onUpdateInterval(1500, function () {
     if (level >= 1 || (0 as any) == (true as any)) {
