@@ -1585,53 +1585,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     true
     )
 })
-sprites.onCreated(SpriteKind.Player, function (sprite) {
-    info.setLife(5)
-    sprite.setPosition(76, 96)
-    sprite.sayText("Let's GO!", 1000, true)
-    sprite.setStayInScreen(true)
-    animation.runImageAnimation(
-    sprite,
-    [img`
-        . . . . . . . . . . b 5 b . . . 
-        . . . . . . . . . b 5 b . . . . 
-        . . . . . . b b b b b b . . . . 
-        . . . . . b b 5 5 5 5 5 b . . . 
-        . . . . b b 5 d 1 f 5 d 4 c . . 
-        . . . . b 5 5 1 f f d d 4 4 4 b 
-        . . . . b 5 5 d f b 4 4 4 4 b . 
-        . . . b d 5 5 5 5 4 4 4 4 b . . 
-        . b b d d d 5 5 5 5 5 5 5 b . . 
-        b d d d b b b 5 5 5 5 5 5 5 b . 
-        c d d b 5 5 d c 5 5 5 5 5 5 b . 
-        c b b d 5 d c d 5 5 5 5 5 5 b . 
-        c b 5 5 b c d d 5 5 5 5 5 5 b . 
-        b b c c c d d d 5 5 5 5 5 d b . 
-        . . . . c c d d d 5 5 5 b b . . 
-        . . . . . . c c c c c b b . . . 
-        `,img`
-        . . . . . . . . . . b 5 b . . . 
-        . . . . . . . . . b 5 b . . . . 
-        . . . . . . b b b b b b . . . . 
-        . . . . . b b 5 5 5 5 5 b . . . 
-        . . . . b b 5 d 1 f 5 5 d f . . 
-        . . . . b 5 5 1 f f 5 d 4 c . . 
-        . . . . b 5 5 d f b d d 4 4 . . 
-        . b b b d 5 5 5 5 5 4 4 4 4 4 b 
-        b d d d b b d 5 5 4 4 4 4 4 b . 
-        b b d 5 5 5 b 5 5 5 5 5 5 b . . 
-        c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
-        c b d c d 5 5 b 5 5 5 5 5 5 b . 
-        . c d d c c b d 5 5 5 5 5 d b . 
-        . . c d d d d d 5 5 5 5 5 b . . 
-        . . . b d d d d d 5 5 5 b . . . 
-        . . . c c c c c c c c b b . . . 
-        `],
-    300,
-    true
-    )
-    controller.moveSprite(sprite, 100, 0)
-})
 scene.onOverlapTile(SpriteKind.Enemy, assets.tile`bottom door`, function (sprite, location) {
     sprites.destroy(sprite)
 })
@@ -1661,28 +1614,14 @@ let projectile: Sprite = null
 let checkpoint: tiles.Location = null
 let statusbar: StatusBarSprite = null
 let BOSS: Sprite = null
-let Ducky: Sprite = null
 let direction = 0
 let refresh = false
 let PowerUps: boolean[] = []
 let bossCounter = 0
 let level = 0
+let Ducky: Sprite = null
 scene.setBackgroundColor(12)
 music.setVolume(202)
-level = 0
-bossCounter = 0
-// 0 = fireQuacker
-// 1 = DUCK Tape
-// 2 = BUBBLE Jump
-// 3 = Ducks Can Fly
-PowerUps = [
-false,
-false,
-false,
-false
-]
-refresh = false
-direction = 100
 music.play(music.createSong(hex`003c000408020300001c00010a006400f4016400000400000000000000000000000000050000042a0000000400012918001a0001291b001c00012a1e001f00012c2000240001293800390001293c003d00012706001c00010a006400f401640000040000000000000000000000000000000002600000000400010f06000700010a08000c00010a0e000f00010f12001300010f16001700010a18001c00010a1c002000010f20002400010d26002700010828002c0001082e002f00010d32003300010d3600370001083800390001083c004000010d09010e02026400000403780000040a000301000000640001c80000040100000000640001640000040100000000fa0004af00000401c80000040a00019600000414000501006400140005010000002c0104dc00000401fa0000040a0001c8000004140005d0076400140005d0070000c800029001f40105c201f4010a0005900114001400039001000005c201f4010500058403050032000584030000fa00049001000005c201f4010500058403c80032000584030500640005840300009001049001000005c201f4010500058403c80064000584030500c8000584030000f40105ac0d000404a00f00000a0004ac0d2003010004a00f0000280004ac0d9001010004a00f0000280002d00700040408070f0064000408070000c80003c800c8000e7d00c80019000e64000f0032000e78000000fa00032c01c8000ee100c80019000ec8000f0032000edc000000fa0003f401c8000ea901c80019000e90010f0032000ea4010000fa0001c8000004014b000000c800012c01000401c8000000c8000190010004012c010000c80002c800000404c8000f0064000496000000c80002c2010004045e010f006400042c010000640002c409000404c4096400960004f6090000f40102b80b000404b80b64002c0104f40b0000f401022003000004200300040a000420030000ea01029001000004900100040a000490010000900102d007000410d0076400960010d0070000c80090000000010001000400050001070600070001000800090001000a000b0001070e000f0001001000110001001200130001071600170001001800190001001c001d0001071e001f0001002000210001002400250001072600270001002800290001002a002b0001072e002f0001003000310001003200330001073600370001003800390001003c003d0001073e003f000100`), music.PlaybackMode.LoopingInBackground)
 let Title = sprites.create(img`
     ....................................................................................................
@@ -1757,6 +1696,65 @@ let Title = sprites.create(img`
     ....................................................................................................
     `, SpriteKind.Title)
 Title.setPosition(80, 41)
+Ducky = sprites.create(img`
+    . . . . . . . . . . b 5 b . . . 
+    . . . . . . . . . b 5 b . . . . 
+    . . . . . . b b b b b b . . . . 
+    . . . . . b b 5 5 5 5 5 b . . . 
+    . . . . b b 5 d 1 f 5 5 d f . . 
+    . . . . b 5 5 1 f f 5 d 4 c . . 
+    . . . . b 5 5 d f b d d 4 4 . . 
+    . b b b d 5 5 5 5 5 4 4 4 4 4 b 
+    b d d d b b d 5 5 4 4 4 4 4 b . 
+    b b d 5 5 5 b 5 5 5 5 5 5 b . . 
+    c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
+    c b d c d 5 5 b 5 5 5 5 5 5 b . 
+    . c d d c c b d 5 5 5 5 5 d b . 
+    . . c b d d d d d 5 5 5 b b . . 
+    . . . c c c c c c c c b b . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
+Ducky.setPosition(76, 96)
+animation.runImageAnimation(
+Ducky,
+[img`
+    . . . . . . . . . . b 5 b . . . 
+    . . . . . . . . . b 5 b . . . . 
+    . . . . . . b b b b b b . . . . 
+    . . . . . b b 5 5 5 5 5 b . . . 
+    . . . . b b 5 d 1 f 5 d 4 c . . 
+    . . . . b 5 5 1 f f d d 4 4 4 b 
+    . . . . b 5 5 d f b 4 4 4 4 b . 
+    . . . b d 5 5 5 5 4 4 4 4 b . . 
+    . b b d d d 5 5 5 5 5 5 5 b . . 
+    b d d d b b b 5 5 5 5 5 5 5 b . 
+    c d d b 5 5 d c 5 5 5 5 5 5 b . 
+    c b b d 5 d c d 5 5 5 5 5 5 b . 
+    c b 5 5 b c d d 5 5 5 5 5 5 b . 
+    b b c c c d d d 5 5 5 5 5 d b . 
+    . . . . c c d d d 5 5 5 b b . . 
+    . . . . . . c c c c c b b . . . 
+    `,img`
+    . . . . . . . . . . b 5 b . . . 
+    . . . . . . . . . b 5 b . . . . 
+    . . . . . . b b b b b b . . . . 
+    . . . . . b b 5 5 5 5 5 b . . . 
+    . . . . b b 5 d 1 f 5 5 d f . . 
+    . . . . b 5 5 1 f f 5 d 4 c . . 
+    . . . . b 5 5 d f b d d 4 4 . . 
+    . b b b d 5 5 5 5 5 4 4 4 4 4 b 
+    b d d d b b d 5 5 4 4 4 4 4 b . 
+    b b d 5 5 5 b 5 5 5 5 5 5 b . . 
+    c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
+    c b d c d 5 5 b 5 5 5 5 5 5 b . 
+    . c d d c c b d 5 5 5 5 5 d b . 
+    . . c d d d d d 5 5 5 5 5 b . . 
+    . . . b d d d d d 5 5 5 b . . . 
+    . . . c c c c c c c c b b . . . 
+    `],
+300,
+true
+)
 game.setDialogFrame(img`
     ..................................................................
     ....33.......33...........dddd............dddd............aaa.....
@@ -1826,32 +1824,32 @@ game.setDialogFrame(img`
     ..................................................................
     `)
 game.showLongText("Press A to start!", DialogLayout.Bottom)
-Ducky = sprites.create(img`
-    . . . . . . . . . . b 5 b . . . 
-    . . . . . . . . . b 5 b . . . . 
-    . . . . . . b b b b b b . . . . 
-    . . . . . b b 5 5 5 5 5 b . . . 
-    . . . . b b 5 d 1 f 5 5 d f . . 
-    . . . . b 5 5 1 f f 5 d 4 c . . 
-    . . . . b 5 5 d f b d d 4 4 . . 
-    . b b b d 5 5 5 5 5 4 4 4 4 4 b 
-    b d d d b b d 5 5 4 4 4 4 4 b . 
-    b b d 5 5 5 b 5 5 5 5 5 5 b . . 
-    c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
-    c b d c d 5 5 b 5 5 5 5 5 5 b . 
-    . c d d c c b d 5 5 5 5 5 d b . 
-    . . c b d d d d d 5 5 5 b b . . 
-    . . . c c c c c c c c b b . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+Ducky.sayText("Let's GO!", 1000, true)
 music.stopAllSounds()
 scene.setBackgroundColor(9)
 music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
 music.play(music.createSong(assets.song`JERSEY`), music.PlaybackMode.LoopingInBackground)
-Ducky.ay = 400
-scene.cameraFollowSprite(Ducky)
 sprites.destroy(Title)
 scene.setBackgroundColor(11)
+level = 0
+bossCounter = 0
+// 0 = fireQuacker
+// 1 = DUCK Tape
+// 2 = BUBBLE Jump
+// 3 = Ducks Can Fly
+PowerUps = [
+false,
+false,
+false,
+false
+]
+refresh = false
+direction = 100
+info.setLife(5)
+controller.moveSprite(Ducky, 100, 0)
+Ducky.setStayInScreen(true)
+Ducky.ay = 400
+scene.cameraFollowSprite(Ducky)
 levelScreen(level)
 game.onUpdateInterval(1500, function () {
     if (level >= 1 || (0 as any) == (true as any)) {
