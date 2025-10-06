@@ -544,12 +544,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
-info.onLifeZero(function () {
-    music.stopAllSounds()
-    game.setGameOverMessage(false, "GAME OVER!")
-    game.setGameOverPlayable(false, music.melodyPlayable(music.wawawawaa), false)
-    game.gameOver(false)
-})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (sprites.allOfKind(SpriteKind.Player).length > 0) {
         if (Ducky.tileKindAt(TileDirection.Center, assets.tile`bottom door0`)) {
@@ -1148,6 +1142,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BOSS, function (sprite, othe
         ........cccccccc........
         `)
 })
+info.onLifeZero(function () {
+    music.stopAllSounds()
+    game.setGameOverMessage(false, "GAME OVER!")
+    game.setGameOverPlayable(false, music.melodyPlayable(music.wawawawaa), false)
+    game.gameOver(false)
+})
 function takeDamage () {
     if (level == 9) {
         info.changeLifeBy(-2)
@@ -1193,6 +1193,38 @@ function colourCheck () {
         scene.setBackgroundColor(12)
     }
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile`)
+    if (level == 1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
+        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
+        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
+        PowerUps[0] = true
+        info.setScore(10)
+    } else if (level == 4) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
+        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
+        PowerUps[1] = true
+    } else if (level == 7) {
+        checkpoint = tiles.getTileLocation(29, 13)
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
+        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
+        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
+        PowerUps[2] = true
+    } else if (level == -1) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
+        game.showLongText("You can fly.", DialogLayout.Bottom)
+        game.showLongText("Just press A.", DialogLayout.Bottom)
+        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
+        PowerUps[3] = true
+        bossCounter = 0
+    }
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 statusbars.onZero(StatusBarKind.Health, function (status) {
     BOSS.setVelocity(0, 0)
     BOSS.ay = 0
@@ -1278,7 +1310,7 @@ function levelScreen (num: number) {
         tiles.setCurrentTilemap(tilemap`level13`)
         checkpoint = tiles.getTileLocation(1, 14)
         if ((0 as any) == (false as any)) {
-            tiles.setTileAt(tiles.getTileLocation(28, 1), sprites.dungeon.chestClosed)
+            tiles.setTileAt(tiles.getTileLocation(28, 1), assets.tile`transparency16`)
         } else {
             tiles.setTileAt(tiles.getTileLocation(28, 1), assets.tile`myTile`)
         }
@@ -1292,7 +1324,7 @@ function levelScreen (num: number) {
         tiles.setCurrentTilemap(tilemap`level32`)
         checkpoint = tiles.getTileLocation(2, 11)
         if ((0 as any) == (false as any)) {
-            tiles.setTileAt(tiles.getTileLocation(7, 6), sprites.dungeon.chestClosed)
+            tiles.setTileAt(tiles.getTileLocation(7, 6), assets.tile`transparency16`)
         } else {
             tiles.setTileAt(tiles.getTileLocation(7, 6), assets.tile`myTile`)
         }
@@ -1306,7 +1338,7 @@ function levelScreen (num: number) {
         tiles.setCurrentTilemap(tilemap`Room 1`)
         checkpoint = tiles.getTileLocation(2, 1)
         if ((0 as any) == (false as any)) {
-            tiles.setTileAt(tiles.getTileLocation(29, 13), sprites.dungeon.chestClosed)
+            tiles.setTileAt(tiles.getTileLocation(29, 13), assets.tile`transparency16`)
         } else {
             tiles.setTileAt(tiles.getTileLocation(29, 13), assets.tile`myTile`)
         }
@@ -1468,7 +1500,7 @@ function levelScreen (num: number) {
         tiles.setCurrentTilemap(tilemap`level47`)
         checkpoint = tiles.getTileLocation(2, 7)
         if ((0 as any) == (false as any)) {
-            tiles.setTileAt(tiles.getTileLocation(14, 2), sprites.dungeon.chestClosed)
+            tiles.setTileAt(tiles.getTileLocation(14, 2), assets.tile`transparency16`)
         } else {
             tiles.setTileAt(tiles.getTileLocation(14, 2), assets.tile`myTile`)
         }
@@ -1476,38 +1508,6 @@ function levelScreen (num: number) {
     tiles.placeOnTile(Ducky, checkpoint)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 }
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`myTile`)
-    if (level == 1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired FireQUACKer!", DialogLayout.Bottom)
-        game.showLongText("Press B to shoot a red beam.", DialogLayout.Bottom)
-        game.showLongText("Look out for pink bottles for ammo!", DialogLayout.Bottom)
-        PowerUps[0] = true
-        info.setScore(10)
-    } else if (level == 4) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired DUCK Tape!", DialogLayout.Bottom)
-        game.showLongText("Press A while against a wall to jump up!", DialogLayout.Bottom)
-        PowerUps[1] = true
-    } else if (level == 7) {
-        checkpoint = tiles.getTileLocation(29, 13)
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired BUBBLE Jump!", DialogLayout.Bottom)
-        game.showLongText("Press A while airborne to jump again.", DialogLayout.Bottom)
-        game.showLongText("You can even jump after a wall jump!", DialogLayout.Bottom)
-        PowerUps[2] = true
-    } else if (level == -1) {
-        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-        game.showLongText("You have acquired THE KNOWLEDGE.", DialogLayout.Bottom)
-        game.showLongText("You can fly.", DialogLayout.Bottom)
-        game.showLongText("Just press A.", DialogLayout.Bottom)
-        game.showLongText("You always had it in you to fly :)", DialogLayout.Bottom)
-        PowerUps[3] = true
-        bossCounter = 0
-    }
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     direction = -100
     animation.runImageAnimation(
